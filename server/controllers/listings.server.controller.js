@@ -42,7 +42,7 @@ exports.create = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(listing);
-      console.log(listing)
+
     }
   });
 };
@@ -56,7 +56,35 @@ exports.read = function(req, res) {
 /* Update a listing - note the order in which this function is called by the router*/
 exports.update = function(req, res) {
   var listing = req.listing;
-
+  console.log("Listing before update:");
+  console.log(listing);
+  Listing.findByIdAndUpdate(listing, {
+    code: req.body.code,
+    name: req.body.name
+  }, {new: true})
+  .then(listing => {
+    if(!listing){
+      return res.status(404).send({
+        message: "Listing not found with id " + listing.id
+      });
+    }
+    if(req.results) {
+      listing.coordinates = {
+        latitude: req.results.lat, 
+        longitude: req.results.lng
+      };
+    }
+    res.json(listing)
+  }).catch(err => {
+    if(err.kind === 'ObjectId'){
+      return res.status(404).send({
+        message: "Listing not found with id " + listing.id
+      });
+    }
+    return res.status(500).send({
+      mesasge: "Error updating note with id " + listing.id
+    });
+  });
   /* Replace the listings's properties with the new properties found in req.body */
  
   /*save the coordinates (located in req.results if there is an address property) */
@@ -69,13 +97,38 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
   var listing = req.listing;
 
-  /* Add your code to remove the listins */
+  Listing.findByIdAndRemove(listing)
+    .then(listing => {
+        if(!listing) {
+            return res.status(404).send({
+                message: "Listing not found with id " + listing.id
+            });
+        }
+        res.send({message: "Listing deleted successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "Listing not found with id " + listing.id
+            });                
+        }
+        return res.status(500).send({
+            message: "Could not delete listing with id " + listing.id
+        });
+    });
 
 };
 
 /* Retreive all the directory listings, sorted alphabetically by listing code */
 exports.list = function(req, res) {
   /* Add your code */
+  Listing.find()
+  .then(listing => {
+    res.send(listing);
+  }).catch(err => {
+    res.status(404).send({
+      message: err.message || "Error"
+    });
+  });
 };
 
 /* 

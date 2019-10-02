@@ -14,18 +14,21 @@ module.exports = function(req, res, next) {
     //Setup your options q and key are provided. Feel free to add others to make the JSON response less verbose and easier to read 
     var options = { 
       q: addressTemp4,
-      key: config.openCage.key,  
+      key: config.openCage.key,
     }
 
     //Setup your request using URL and options - see ? for format
-    request({
-      url: 'https://api.opencagedata.com/geocode/v1/json', 
-      qs: options
+    request({ 
+      url: 'https://api.opencagedata.com/geocode/v1/json?q=' + options.q + '&key=' + options.key + '&pretty=1' + '&no-annotations=1',
+      qs: options,
       }, function(error, response, body) {
+      
+        //console.log(response.body);
         //For ideas about response and error processing see https://opencagedata.com/tutorials/geocode-in-nodejs
-        
+
+        req.results = (JSON.parse(response.body).results[0].geometry);
         //JSON.parse to get contents. Remember to look at the response's JSON format in open cage data
-        
+
         /*Save the coordinates in req.results -> 
           this information will be accessed by listings.server.model.js 
           to add the coordinates to the listing request to be saved to the database.
@@ -33,6 +36,7 @@ module.exports = function(req, res, next) {
           Assumption: if we get a result we will take the coordinates from the first result returned
         */
         //  req.results = stores you coordinates
+        
         next();
     });
   } else {
