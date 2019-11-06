@@ -34,7 +34,7 @@ class App extends React.Component {
 
   addToData = (newCode, newName) => {
     var newBuilding = {
-        id: this.state.data.length + 1,
+        id: this.state.data.length,
         code: newCode,
         name: newName
     }
