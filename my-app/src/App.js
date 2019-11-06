@@ -47,17 +47,20 @@ class App extends React.Component {
   removeBuilding = (id) => {
     this.setState({
       ...this.state,
-      data: this.state.data.filter(directory => directory.id !== id),
-      selectedBuilding: 0
+      selectedBuilding: 0,
+      data: this.state.data.filter(directory => directory.id !== id)
+      
     })
   }
 
   render() {
     return (
       <div className="bg">
-        <div className="row">
-          <h1>UF Directory App</h1>
-        </div>
+
+          <nav class="navbar navbar-dark bg-dark">
+            <span class="navbar-brand mb-0 h1">UF Directory App</span>
+          </nav>
+
 
         <AddBuilding addToData={this.addToData}/>
 

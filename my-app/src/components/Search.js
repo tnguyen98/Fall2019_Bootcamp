@@ -8,7 +8,7 @@ class Search extends React.Component {
 		
 		return (
 			<form>
-				<input type="text" placeholder="Type to Filter" value={this.props.filterText} onChange={this.props.filterUpdate}/>
+				<input type="text" placeholder="Type to filter" value={this.props.filterText} onChange={this.props.filterUpdate}/>
 			</form>
 		);
 	}

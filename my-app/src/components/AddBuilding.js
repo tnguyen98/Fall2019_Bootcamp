@@ -34,8 +34,8 @@ class AddBuilding extends React.Component {
 		return (
 			<>
                 <form>
-                    <input type="text" placeholder="Add a code bro" value={this.state.code}  onChange={this.changeCode}/>
-                    <input type="text" placeholder="Add a building bro" value={this.state.name}  onChange={this.changeName}/>
+                    <input type="text" placeholder="Add a building code" value={this.state.code}  onChange={this.changeCode}/>
+                    <input type="text" placeholder="Add a building name" value={this.state.name}  onChange={this.changeName}/>
                 </form>
                 <div style={{textAlign: "center" }}>
                     <button  class="btn btn-primary" onClick={() => this.submitForm()}>Add</button>
