@@ -7,11 +7,10 @@ class ViewBuilding extends React.Component {
 
 			<div className="card text-dark bg-light mb-3">
 				<div className="card-body">
-					{this.props.selectedBuilding === 0 ? 
+					{this.props.selectedBuilding === null ? 
 					<i>Click on a name to view more information</i>
 					:
 					<>
-						<div>{this.props.building.id}</div>
 						<div>{this.props.building.code}</div>
 						<div>{this.props.building.name}</div>
 						<div>{this.props.building.address}</div>

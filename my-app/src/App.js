@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       data: this.props.data,
       filterText: '',
-      selectedBuilding: 0
+      selectedBuilding: null
     };
   }
 
@@ -47,8 +47,8 @@ class App extends React.Component {
   removeBuilding = (id) => {
     this.setState({
       ...this.state,
-      selectedBuilding: 0,
-      data: this.state.data.filter(directory => directory.id !== id)
+      selectedBuilding: null,
+      data: this.state.data.filter((directory, index) => index !== id)
       
     })
   }
@@ -88,7 +88,7 @@ class App extends React.Component {
               </div>
             </div>
             <div className="column2">
-              <ViewBuilding selectedBuilding={this.state.selectedBuilding} building={this.state.data[this.state.selectedBuilding - 1]} />
+              <ViewBuilding selectedBuilding={this.state.selectedBuilding} building={this.state.data[this.state.selectedBuilding]} />
             </div>
           </div>
           <Credit />
